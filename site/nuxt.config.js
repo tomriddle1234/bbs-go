@@ -1,6 +1,6 @@
 export default {
   server: {
-    port: 3000,
+    port: 8089,
     host: '0.0.0.0',
     timing: {
       total: true,
@@ -93,7 +93,7 @@ export default {
     [
       '@nuxtjs/google-adsense',
       {
-        id: 'ca-pub-5683711753850351',
+        id: 'ca-pub-3165489291707637',
         pageLevelAds: true,
       },
     ],
@@ -108,12 +108,14 @@ export default {
   },
 
   proxy: {
+    // '/api/': 'http://127.0.0.1:8085'
+    // '/api/': 'https://mlog.club'
     '/api/':
       process.env.NODE_ENV === 'production'
         ? 'https://mlog.club'
         : process.env.NODE_ENV === 'docker'
-        ? 'http://bbs-go-server:8082'
-        : 'http://127.0.0.1:8082',
+        ? 'http://bbs-go-server:8087'
+        : 'http://127.0.0.1:8087',
   },
 
   // Doc: https://github.com/shakee93/vue-toasted
