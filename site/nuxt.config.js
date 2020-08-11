@@ -7,6 +7,8 @@ export default {
     },
   },
   mode: 'universal',
+  // this is important to prevent ask for data access
+  telemetry: false,
   /*
    ** Headers of the page
    */
