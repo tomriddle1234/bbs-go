@@ -6,12 +6,12 @@
       class="topic-item"
     >
       <!-- 信息流广告 -->
-<!--      <adsbygoogle-->
-<!--        v-if="showAd && (index === 3 || index === 10 || index === 18)"-->
-<!--        ad-slot="4980294904"-->
-<!--        ad-format="fluid"-->
-<!--        ad-layout-key="-ht-19-1m-3j+mu"-->
-<!--      />-->
+      <!--      <adsbygoogle-->
+      <!--        v-if="showAd && (index === 3 || index === 10 || index === 18)"-->
+      <!--        ad-slot="4980294904"-->
+      <!--        ad-format="fluid"-->
+      <!--        ad-layout-key="-ht-19-1m-3j+mu"-->
+      <!--      />-->
       <article itemscope itemtype="http://schema.org/BlogPosting">
         <div class="topic-header">
           <div v-if="showAvatar" class="topic-header-left">
@@ -65,8 +65,8 @@
             <div class="like">
               <span
                 :class="{ liked: topic.liked }"
-                class="like-btn"
                 @click="like(topic)"
+                class="like-btn"
               >
                 <i class="iconfont icon-like" />
               </span>

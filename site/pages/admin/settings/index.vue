@@ -148,11 +148,11 @@
                 </el-col>
                 <el-col :span="2">
                   <el-button
+                    @click="delNav(index)"
                     type="danger"
                     icon="el-icon-delete"
                     circle
                     size="small"
-                    @click="delNav(index)"
                   ></el-button>
                 </el-col>
               </el-row>
@@ -166,10 +166,10 @@
               placement="top"
             >
               <el-button
+                @click="addNav"
                 type="primary"
                 icon="el-icon-plus"
                 circle
-                @click="addNav"
               ></el-button>
             </el-tooltip>
           </div>
@@ -209,7 +209,7 @@
       </el-tabs>
 
       <div style="text-align: right;">
-        <el-button :loading="loading" type="primary" @click="save"
+        <el-button :loading="loading" @click="save" type="primary"
           >保存配置
         </el-button>
       </div>
