@@ -1,6 +1,6 @@
 export default {
   server: {
-    port: 3000,
+    port: 8086,
     host: '0.0.0.0',
     timing: {
       total: true
@@ -93,7 +93,7 @@ export default {
     [
       '@nuxtjs/google-adsense',
       {
-        id: 'ca-pub-5683711753850351',
+        id: 'ca-pub-3165489291707637',
         pageLevelAds: true
       }
     ]
@@ -108,7 +108,7 @@ export default {
   },
 
   proxy: {
-    '/api/': 'http://127.0.0.1:8082'
+    '/api/': 'http://127.0.0.1:8085'
     // '/api/': 'https://mlog.club'
   },
 
