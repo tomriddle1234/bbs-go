@@ -1,0 +1,1 @@
+scp server/bbs-go.yaml tom@monster:/home/tom/src/bbs-go/server/
