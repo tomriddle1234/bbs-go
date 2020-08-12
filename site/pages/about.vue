@@ -8,31 +8,25 @@
         <div class="widget-content content">
           <h2>简介</h2>
           <p>
-            BBS-GO&nbsp;是一款基于Go语言研发的精美小巧的开源社区论坛系统。初期该项目仅用过学习和交流，开源之后越来越多的小伙伴儿开始喜欢和关注他，这也是我长期升级和维护的动力。
+            VIOC社区是一个配合Vispoc.com和Vimooc.org在线课程网站教学的讨论区，同时也是一个欢迎个方面朋友的关于数字艺术和技术的社区。本社区仅作学习和交流，希望用户踊跃发言，遵守社区规范。
           </p>
 
           <p>
-            为方便大家学习和交流我们在2019年8月使用&nbsp;BBS-GO&nbsp;搭建了&nbsp;<a
-              href="https://mlog.club"
+            为方便大家学习和交流我们在2020年8月使用&nbsp;BBS-GO&nbsp;搭建了&nbsp;<a
+              href="https://bbs.vispoc.com"
               target="_blank"
-              >码农俱乐部</a
+              >VIOC社区</a
             >，欢迎大家前往交流。
           </p>
 
           <h2>与我联系</h2>
           <p>
-            如有任何想法、意见、问题可前往&nbsp;<a
-              href="https://mlog.club"
-              target="_blank"
-              >码农俱乐部</a
-            >&nbsp;交流。
+            如有任何想法、意见、问题可以在本社区发帖交流。
           </p>
-          <h2>项目贡献者</h2>
+          <h2>社区系统</h2>
           <p>
-            <a
-              href="https://github.com/mlogclub/bbs-go/graphs/contributors"
-              target="_blank"
-              >Contributors</a
+            感谢<a href="https://github.com/mlogclub/bbs-go" target="_blank"
+              >BBS-GO</a
             >
           </p>
           <!-- 展示广告 -->

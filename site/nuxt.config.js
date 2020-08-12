@@ -43,7 +43,7 @@ export default {
       {
         rel: 'alternate',
         type: 'application/atom+xml',
-        title: '最新开源项目',
+        title: '最新项目',
         href: '/project_atom.xml',
       },
       {
