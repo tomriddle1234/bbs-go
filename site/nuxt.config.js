@@ -95,6 +95,7 @@ export default {
     [
       '@nuxtjs/google-adsense',
       {
+        // 已经改过
         id: 'ca-pub-3165489291707637',
         pageLevelAds: true,
       },
