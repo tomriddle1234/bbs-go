@@ -16,9 +16,9 @@
       ref="tagInput"
       v-model="inputTag"
       :placeholder="
-        '标签（请用逗号分隔每个标签，最多' +
-        maxTagCount +
-        '个，每个最长15字符）'
+        '标签（输入字词完毕按回车创建标签，最多' +
+          maxTagCount +
+          '个，每个最长15字符）'
       "
       @input="autocomplete"
       @keydown.delete="removeTag"
