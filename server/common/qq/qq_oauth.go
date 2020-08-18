@@ -140,7 +140,7 @@ func GetUserInfo(accessToken string) (*UserInfo, error) {
 	msg := gjson.Get(content, "msg").String()
 
 	if ret != 0 {
-		return nil, errors.New("get_user_info:ret=" + strconv.FormatInt(ret, 10) + ",msg=" + msg)
+		return nil, errors.New("get_user_info:ret=" + strconv.FormatInt(ret, 10) + ",msg=" + msg + ",openid="+openid+",unionid="+unionid)
 	}
 
 	userInfo := &UserInfo{}
