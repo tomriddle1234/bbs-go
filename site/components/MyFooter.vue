@@ -8,7 +8,22 @@
           <a href="/links">友链</a>
         </div>
         <div>
-          Copyright ©2017-2020 版权所有 桂ICP备17000524号 Powered by
+          Copyright ©2017-2020 版权所有 桂ICP备17000524号
+          <a
+            target="_blank"
+            href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=45010302002294"
+            style="display:inline-block;text-decoration:none;height:20px;line-height:20px;"
+            ><img
+              src="//s.bulejie.com/images/gabaicon.png"
+              style="float:left;"
+            />
+            <p
+              style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; "
+            >
+              桂公网安备 45010302002294号
+            </p></a
+          >
+          Powered by
           <a href="http://vfxware.com" target="_blank" class="light"
             >VFXWARE</a
           >
