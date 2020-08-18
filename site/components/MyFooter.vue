@@ -17,9 +17,7 @@
               src="//s.bulejie.com/images/gabaicon.png"
               style="float:left;"
             />
-            <p
-              style="float:left;height:20px;line-height:20px;margin: 0px 0px 0px 5px; "
-            >
+            <p>
               桂公网安备 45010302002294号
             </p></a
           >
