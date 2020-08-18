@@ -17,14 +17,10 @@
               src="//s.bulejie.com/images/gabaicon.png"
               style="float:left;"
             />
-            <p>
-              桂公网安备 45010302002294号
-            </p></a
-          >
+            桂公网安备 45010302002294号
+          </a>
           Powered by
-          <a href="http://vfxware.com" target="_blank" class="light"
-            >VFXWARE</a
-          >
+          <a href="http://vfxware.com" target="_blank" class="light">VFXWARE</a>
         </div>
       </div>
     </footer>
