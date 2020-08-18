@@ -101,7 +101,7 @@ func AuthorizationCode(code, state string) (*AccessToken, error) {
 func GetOpenid(accessToken string) (string, string, error) {
 	resp, err := resty.New().R().
 		SetQueryParam("access_token", accessToken).
-		//SetQueryParam("unionid", "1"). // 申请unionId，0：不申请，1：申请
+		//SetQueryParam("unionid", "1"). // 申请unionId，0：不申请，1：申请 20200818 根据文档需要去除这一句
 		Get("https://graph.qq.com/oauth2.0/me")
 	if err != nil {
 		logrus.Errorf("QQ: Get openid error", err)
