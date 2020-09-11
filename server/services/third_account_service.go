@@ -112,7 +112,9 @@ func (s *thirdAccountService) GetOrCreateByQQ(code, state string) (*model.ThirdA
 		return nil, err
 	}
 
-	account := s.GetThirdAccount(constants.ThirdAccountTypeQQ, userInfo.Unionid)
+	//account := s.GetThirdAccount(constants.ThirdAccountTypeQQ, userInfo.Unionid)
+	account := s.GetThirdAccount(constants.ThirdAccountTypeQQ, userInfo.Openid)
+
 	if account != nil {
 		return account, nil
 	}
