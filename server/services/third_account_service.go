@@ -125,7 +125,8 @@ func (s *thirdAccountService) GetOrCreateByQQ(code, state string) (*model.ThirdA
 		Avatar:     userInfo.FigureurlQQ1,
 		Nickname:   strings.TrimSpace(userInfo.Nickname),
 		ThirdType:  constants.ThirdAccountTypeQQ,
-		ThirdId:    userInfo.Unionid,
+		//ThirdId:    userInfo.Unionid,  //Unionid maybe empty
+		ThirdId:    userInfo.Openid,
 		ExtraData:  userInfoJson,
 		CreateTime: simple.NowTimestamp(),
 		UpdateTime: simple.NowTimestamp(),
