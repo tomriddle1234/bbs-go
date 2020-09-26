@@ -3,13 +3,15 @@ package services
 import (
 	"bbs-go/model/constants"
 	"errors"
+	"github.com/mlogclub/simple/json"
+	"github.com/mlogclub/simple/number"
 	"strconv"
 	"strings"
 
-	"github.com/jinzhu/gorm"
 	"github.com/mlogclub/simple"
 	"github.com/sirupsen/logrus"
 	"github.com/tidwall/gjson"
+	"gorm.io/gorm"
 
 	"bbs-go/cache"
 	"bbs-go/model"
@@ -59,7 +61,7 @@ func (s *sysConfigService) SetAll(configStr string) error {
 	if !ok {
 		return errors.New("配置数据格式错误")
 	}
-	return simple.Tx(simple.DB(), func(tx *gorm.DB) error {
+	return simple.DB().Transaction(func(tx *gorm.DB) error {
 		for k, _ := range configs {
 			v := json.Get(k).String()
 			if err := s.setSingle(tx, k, v, "", ""); err != nil {
@@ -72,7 +74,7 @@ func (s *sysConfigService) SetAll(configStr string) error {
 
 // 设置配置，如果配置不存在，那么创建
 func (s *sysConfigService) Set(key, value, name, description string) error {
-	return simple.Tx(simple.DB(), func(tx *gorm.DB) error {
+	return simple.DB().Transaction(func(tx *gorm.DB) error {
 		if err := s.setSingle(tx, key, value, name, description); err != nil {
 			return err
 		}
@@ -94,10 +96,10 @@ func (s *sysConfigService) setSingle(db *gorm.DB, key, value, name, description 
 	sysConfig.Value = value
 	sysConfig.UpdateTime = simple.NowTimestamp()
 
-	if len(name) > 0 {
+	if simple.IsNotBlank(name) {
 		sysConfig.Name = name
 	}
-	if len(description) > 0 {
+	if simple.IsNotBlank(description) {
 		sysConfig.Description = description
 	}
 
@@ -115,68 +117,86 @@ func (s *sysConfigService) setSingle(db *gorm.DB, key, value, name, description 
 	}
 }
 
-func (s *sysConfigService) GetConfig() *model.ConfigData {
+func (s *sysConfigService) GetTokenExpireDays() int {
+	tokenExpireDaysStr := cache.SysConfigCache.GetValue(constants.SysConfigTokenExpireDays)
+	tokenExpireDays, err := strconv.Atoi(tokenExpireDaysStr)
+	if err != nil {
+		tokenExpireDays = constants.DefaultTokenExpireDays
+	}
+	if tokenExpireDays <= 0 {
+		tokenExpireDays = constants.DefaultTokenExpireDays
+	}
+	return tokenExpireDays
+}
+
+func (s *sysConfigService) GetConfig() *model.SysConfigResponse {
 	var (
-		siteTitle          = cache.SysConfigCache.GetValue(constants.SysConfigSiteTitle)
-		siteDescription    = cache.SysConfigCache.GetValue(constants.SysConfigSiteDescription)
-		siteKeywords       = cache.SysConfigCache.GetValue(constants.SysConfigSiteKeywords)
-		siteNavs           = cache.SysConfigCache.GetValue(constants.SysConfigSiteNavs)
-		siteNotification   = cache.SysConfigCache.GetValue(constants.SysConfigSiteNotification)
-		recommendTags      = cache.SysConfigCache.GetValue(constants.SysConfigRecommendTags)
-		urlRedirect        = cache.SysConfigCache.GetValue(constants.SysConfigUrlRedirect)
-		scoreConfigStr     = cache.SysConfigCache.GetValue(constants.SysConfigScoreConfig)
-		defaultNodeIdStr   = cache.SysConfigCache.GetValue(constants.SysConfigDefaultNodeId)
-		articlePending     = cache.SysConfigCache.GetValue(constants.SysConfigArticlePending)
-		topicCaptcha       = cache.SysConfigCache.GetValue(constants.SysConfigTopicCaptcha)
-		userObserveHourStr = cache.SysConfigCache.GetValue(constants.SysConfigUserObserveHour)
+		siteTitle             = cache.SysConfigCache.GetValue(constants.SysConfigSiteTitle)
+		siteDescription       = cache.SysConfigCache.GetValue(constants.SysConfigSiteDescription)
+		siteKeywords          = cache.SysConfigCache.GetValue(constants.SysConfigSiteKeywords)
+		siteNavs              = cache.SysConfigCache.GetValue(constants.SysConfigSiteNavs)
+		siteNotification      = cache.SysConfigCache.GetValue(constants.SysConfigSiteNotification)
+		recommendTags         = cache.SysConfigCache.GetValue(constants.SysConfigRecommendTags)
+		urlRedirect           = cache.SysConfigCache.GetValue(constants.SysConfigUrlRedirect)
+		scoreConfigStr        = cache.SysConfigCache.GetValue(constants.SysConfigScoreConfig)
+		defaultNodeIdStr      = cache.SysConfigCache.GetValue(constants.SysConfigDefaultNodeId)
+		articlePending        = cache.SysConfigCache.GetValue(constants.SysConfigArticlePending)
+		topicCaptcha          = cache.SysConfigCache.GetValue(constants.SysConfigTopicCaptcha)
+		userObserveSecondsStr = cache.SysConfigCache.GetValue(constants.SysConfigUserObserveSeconds)
+		tokenExpireDays       = s.GetTokenExpireDays()
 	)
 
 	var siteKeywordsArr []string
 	if simple.IsNotBlank(siteKeywords) {
-		if err := simple.ParseJson(siteKeywords, &siteKeywordsArr); err != nil {
+		if err := json.Parse(siteKeywords, &siteKeywordsArr); err != nil {
 			logrus.Warn("站点关键词数据错误", err)
 		}
 	}
 
 	var siteNavsArr []model.ActionLink
 	if simple.IsNotBlank(siteNavs) {
-		if err := simple.ParseJson(siteNavs, &siteNavsArr); err != nil {
+		if err := json.Parse(siteNavs, &siteNavsArr); err != nil {
 			logrus.Warn("站点导航数据错误", err)
 		}
 	}
 
 	var recommendTagsArr []string
 	if simple.IsNotBlank(recommendTags) {
-		if err := simple.ParseJson(recommendTags, &recommendTagsArr); err != nil {
+		if err := json.Parse(recommendTags, &recommendTagsArr); err != nil {
 			logrus.Warn("推荐标签数据错误", err)
 		}
 	}
 
 	var scoreConfig model.ScoreConfig
 	if simple.IsNotBlank(scoreConfigStr) {
-		if err := simple.ParseJson(scoreConfigStr, &scoreConfig); err != nil {
+		if err := json.Parse(scoreConfigStr, &scoreConfig); err != nil {
 			logrus.Warn("积分配置错误", err)
 		}
 	}
 
 	var (
-		defaultNodeId, _   = strconv.ParseInt(defaultNodeIdStr, 10, 64)
-		userObserveHour, _ = strconv.Atoi(userObserveHourStr)
+		defaultNodeId      = number.ToInt64(defaultNodeIdStr)
+		userObserveSeconds = number.ToInt(userObserveSecondsStr)
 	)
 
-	return &model.ConfigData{
-		SiteTitle:        siteTitle,
-		SiteDescription:  siteDescription,
-		SiteKeywords:     siteKeywordsArr,
-		SiteNavs:         siteNavsArr,
-		SiteNotification: siteNotification,
-		RecommendTags:    recommendTagsArr,
-		UrlRedirect:      strings.ToLower(urlRedirect) == "true",
-		ScoreConfig:      scoreConfig,
-		DefaultNodeId:    defaultNodeId,
-		ArticlePending:   strings.ToLower(articlePending) == "true",
-		TopicCaptcha:     strings.ToLower(topicCaptcha) == "true",
-		UserObserveHour:  userObserveHour,
+	if tokenExpireDays <= 0 {
+		tokenExpireDays = 7
+	}
+
+	return &model.SysConfigResponse{
+		SiteTitle:          siteTitle,
+		SiteDescription:    siteDescription,
+		SiteKeywords:       siteKeywordsArr,
+		SiteNavs:           siteNavsArr,
+		SiteNotification:   siteNotification,
+		RecommendTags:      recommendTagsArr,
+		UrlRedirect:        strings.ToLower(urlRedirect) == "true",
+		ScoreConfig:        scoreConfig,
+		DefaultNodeId:      defaultNodeId,
+		ArticlePending:     strings.ToLower(articlePending) == "true",
+		TopicCaptcha:       strings.ToLower(topicCaptcha) == "true",
+		UserObserveSeconds: userObserveSeconds,
+		TokenExpireDays:    tokenExpireDays,
 	}
 }
 
