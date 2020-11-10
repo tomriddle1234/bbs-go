@@ -1,5 +1,6 @@
--- CREATE DATABASE bbsgo_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE vioc_bbsgo_db;
+-- need run with root access of course set user priviledge too
+-- CREATE DATABASE wencang_bbsgo_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE wencang_bbsgo_db;
 -- 初始化用户表
 CREATE TABLE IF NOT EXISTS `t_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

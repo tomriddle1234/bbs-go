@@ -117,8 +117,8 @@ export default {
       process.env.NODE_ENV === 'production'
         ? 'https://mlog.club'
         : process.env.NODE_ENV === 'docker'
-        ? 'http://bbs-go-server:8087'
-        : 'http://127.0.0.1:8087',
+        ? 'http://bbs-go-server:8089'
+        : 'http://127.0.0.1:8089',
   },
 
   // Doc: https://github.com/shakee93/vue-toasted
