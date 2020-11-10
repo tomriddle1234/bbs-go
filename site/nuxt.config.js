@@ -1,6 +1,6 @@
 export default {
   server: {
-    port: 8089,
+    port: 8087,
     host: '0.0.0.0',
     timing: {
       total: true,
@@ -115,7 +115,7 @@ export default {
     // '/api/': 'https://mlog.club'
     '/api/':
       process.env.NODE_ENV === 'production'
-        ? 'https://mlog.club'
+        ? 'http://127.0.0.1:8089'
         : process.env.NODE_ENV === 'docker'
         ? 'http://bbs-go-server:8089'
         : 'http://127.0.0.1:8089',
