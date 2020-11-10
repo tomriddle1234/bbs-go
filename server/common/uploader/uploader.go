@@ -1,6 +1,7 @@
 package uploader
 
 import (
+	"strings"
 	"sync"
 
 	"github.com/mlogclub/simple"
@@ -30,16 +31,33 @@ func PutObject(key string, data []byte) (string, error) {
 	return getUploader().PutObject(key, data)
 }
 
-func CopyImage(originUrl string) (string, error) {
-	return getUploader().CopyImage(originUrl)
+func CopyImage(url string) (string, error) {
+	u1 := simple.ParseUrl(url).GetURL()
+	u2 := simple.ParseUrl(config.Instance.BaseUrl).GetURL()
+	// 本站host，不下载
+	if u1.Host == u2.Host {
+		return url, nil
+	}
+	return getUploader().CopyImage(url)
 }
 
 func getUploader() uploader {
-	enable := config.Instance.Uploader.Enable
-	if simple.EqualsIgnoreCase(enable, "aliyun") || simple.EqualsIgnoreCase(enable, "oss") ||
-		simple.EqualsIgnoreCase(enable, "aliyunOss") {
+	if IsEnabledOss() {
 		return aliyun
 	} else {
 		return local
 	}
+}
+
+// IsEnabledOss 是否启用阿里云oss
+func IsEnabledOss() bool {
+	enable := config.Instance.Uploader.Enable
+	return simple.EqualsIgnoreCase(enable, "aliyun") || simple.EqualsIgnoreCase(enable, "oss") ||
+		simple.EqualsIgnoreCase(enable, "aliyunOss")
+}
+
+// IsOssImageUrl 是否是存放在阿里云oss中的图片
+func IsOssImageUrl(url string) bool {
+	host := simple.ParseUrl(config.Instance.Uploader.AliyunOss.Host).GetURL().Host
+	return strings.Contains(url, host)
 }

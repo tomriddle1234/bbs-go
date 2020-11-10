@@ -44,7 +44,7 @@ export default {
         rel: 'alternate',
         type: 'application/atom+xml',
         title: '最新项目',
-        href: '/project_atom.xml'
+        href: '/project_atom.xml',
       },
       {
         rel: 'stylesheet',
@@ -97,9 +97,9 @@ export default {
       {
         // 已经改过
         id: 'ca-pub-3165489291707637',
-        pageLevelAds: true
-      }
-    ]
+        pageLevelAds: true,
+      },
+    ],
   ],
   /*
    ** Axios module configuration
@@ -111,8 +111,14 @@ export default {
   },
 
   proxy: {
-    '/api/': 'http://127.0.0.1:8085'
+    // '/api/': 'http://127.0.0.1:8085'
     // '/api/': 'https://mlog.club'
+    '/api/':
+      process.env.NODE_ENV === 'production'
+        ? 'http://127.0.0.1:8085'
+        : process.env.NODE_ENV === 'docker'
+        ? 'http://bbs-go-server:8085'
+        : 'http://127.0.0.1:8085',
   },
 
   // Doc: https://github.com/shakee93/vue-toasted
